@@ -70,7 +70,7 @@ void showNode(ListNode *head)
 
 
 
-ListNode *MergeNode(ListNode *head1,ListNode *head2)
+ListNode *MergeNode(ListNode *head1,ListNode *head2) //合并两个有序链表
 {
     auto pHead = new ListNode(0);
     auto pTail = pHead;
