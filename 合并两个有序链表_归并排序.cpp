@@ -99,13 +99,13 @@ ListNode *MergeNode(ListNode *head1,ListNode *head2) //合并两个有序链表
 }
 ListNode *guiBingSort(ListNode *head) //归并排序
 {
-   if(!head || !head->next)
+   if(!head || !head->next)          
    return head;
    ListNode *pHead = new ListNode(0);  //重要 不然如果从head开始的话，1，2,3,4 slow会指向3，这样就不能平均分配了
    pHead->next = head;
    auto  slow = pHead;
    auto fast = pHead;
-   while(fast && fast->next)
+   while(fast && fast->next)           //核心是找到中点mid，通过双指针一个快一个慢来实现，快指针每次走两步，慢指针每次走一步，快指针走到尾部的时候，慢指针就在中点了
     {
       slow=slow->next;
       fast=fast->next->next;
