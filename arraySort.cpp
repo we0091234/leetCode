@@ -87,15 +87,20 @@ void MergeSort(vector<int>&array,int left,int right)
     }
 }
 
-void hillSort(vector<int>&array)
-{
+void hillSort(vector<int>&array)   //希尔排序
+{//
     for(int gap=array.size();gap>0; gap/=2)
     {
-        for(int i = gap; i<array.size();i++)
+        for(int i = gap; i<array.size();i+=1)
         {
             int tmp = array[i];
             int pos = i-gap;
             while(pos>=0 && array[pos]>tmp)
+            {
+                array[pos+gap]=array[pos];
+                pos-=gap;
+            }
+            array[pos+gap]=tmp;
         }
     }
 }
@@ -104,11 +109,11 @@ void hillSort(vector<int>&array)
 
 int main(int argc, char **argv)
 {
-    vector<int> array{9,8,7,6,5,4,3,2,10};
+    vector<int> array{2,2,2,2,2,1};
     vector<int> MerGearray1{4,2,5,1};
     show(MerGearray1);
     // quickSort(array,0,array.size()-1);
-    insertSort3(array);
+    hillSort(array);
     // MergeSort(array,0,array.size()-1);
      show(array);
     return 0;
