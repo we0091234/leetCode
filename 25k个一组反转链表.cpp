@@ -31,7 +31,7 @@ void showNode(ListNode *head)
     }
 }
 
-ListNode * reverse(ListNode *head,ListNode *nextHead)
+ListNode * reverse(ListNode *head,ListNode *nextHead) //如果整条翻转就把nextHead变为NULL即可
 {
     auto pre =head;
     auto cur = head->next;
@@ -46,7 +46,7 @@ ListNode * reverse(ListNode *head,ListNode *nextHead)
     return pre;
 }
 
-ListNode * KgroupReverse(ListNode *head,int k)
+ListNode * KgroupReverse(ListNode *head,int k) //普通版本
 {
     if(!head || k==1)
       return head;
@@ -70,12 +70,32 @@ ListNode * KgroupReverse(ListNode *head,int k)
     }
     return pHead->next;
 }
+
+ListNode * KgroupReverseRecursion(ListNode *head,int k) //递归版本
+{
+    if(!head || k==1)
+      return head;
+    auto cur = head;
+    for(int i = 0; i<k;i++)
+    {
+        if(!cur)
+        return head;
+        cur=cur->next;
+    }
+    auto newHead = reverse(head,cur);
+    head->next=KgroupReverseRecursion(cur,k);
+    return newHead;
+
+}
+
+
+
 int main(void)
 {
     vector<int> myArray{1,2,3,4,5};
     auto head = initNode(myArray);
     showNode(head);
-    head=KgroupReverse(head,5);
+    head=KgroupReverseRecursion(head,2);
     showNode(head);
     return 0;
 }
