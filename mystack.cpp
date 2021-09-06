@@ -13,8 +13,11 @@ template<typename T>
 class myStack
 {
     public:
-    ListNode<T> * top=nullptr;
-    // myStack();
+    ListNode<T> * top;
+    myStack()
+    {
+        top =nullptr;
+    }
     void push(T val)
     {
         auto newTop = new ListNode<T>(val);
@@ -58,6 +61,22 @@ class myStack
         }
         cout<<endl;
     }
+    void clear()
+    {
+        if(!isEmpty())
+        while(top)
+        {
+        auto tmp = top;
+        top =top->next;
+        delete tmp;
+        }
+        else
+        {
+            cout<<"mySt is empty"<<endl;
+        }
+       
+
+    }
 
 };
 
@@ -86,21 +105,23 @@ bool bracketMatching(string &s)
 int main(int argc, char**argv) {
 
  myStack<int> mySt;
-//  mySt.push(1);
-//   mySt.push(2);
-//    mySt.push(3);
-// //    int val = mySt.Top();
-// //    cout<<val<<endl;
-// //    mySt.show();
+ mySt.push(1);
+  mySt.push(2);
+   mySt.push(3);
+   mySt.show();
+   mySt.clear();
+   mySt.show();
+//    int val = mySt.Top();
+//    cout<<val<<endl;
+//    mySt.show();
 //  cout<<mySt.isEmpty()<<endl;
-mySt.pop();
+// mySt.pop();
 
 // mySt.pop();
 // mySt.pop();
 // mySt.pop();
 // int val = mySt.Top();
 // mySt.show();
-// string s="(])";
-// cout<<bracketMatching(s)<<endl;
+
 return 0;
 }
