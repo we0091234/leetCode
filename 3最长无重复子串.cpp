@@ -115,9 +115,50 @@ int zuichangwuchognfuzichuan(string s) //my
     return max;
     
 }
+int theLongestNonrepetitiveSubstring(string s) //最长无重复子串长度
+{
+    map<char,int> mymap;
+    int j = 0;
+    int len = 0;
+    for(int i = 0; i<s.size(); i++)
+    {
+        if(mymap.find(s[i])!=mymap.end())
+        {
+            j = max(j,mymap[s[i]]);        //必须是max ，因为比如abba,那么如果到第二个a的时候，j会变为1
+        }
+        len = max(len,i-j+1);
+        mymap[s[i]]=i+1;
+    }
+    return len;
+}
+
+string theLongestNonrepetitiveSubstring1(string s) //返回最长无重复子串
+{
+    map<char,int> mymap;
+    int j = 0;
+    int len = 0;
+    int max1= 0;
+    int index1=j,index2;
+    for(int i = 0; i<s.size(); i++)
+    {
+        if(mymap.find(s[i])!=mymap.end())
+        {
+            j = max(j,mymap[s[i]]);        //必须是max ，因为比如abba,那么如果到第二个a的时候，j会变为1
+        }
+        int len = i-j+1;
+        if(max1<len)
+        {
+            max1=len;
+            index1=j;
+            index2 = i;
+        }
+        mymap[s[i]]=i+1;
+    }
+    return s.substr(index1, index2-index1+1);
+}
 
 int main(int argc, char ** argv)
 {
-    cout<<zuichangwuchognfuzichuan("abcdefab")<<endl;
+    cout<<theLongestNonrepetitiveSubstring1("aaaabccc")<<endl;
     return 0;
 }

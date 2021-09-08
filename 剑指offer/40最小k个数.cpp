@@ -104,33 +104,55 @@ void heapfy(vector<int> &nums,int len,int parent) //将parent变为最大的
      leftChild=2*leftChild+1;
  }
 }
-void buildHeap(vector<int>&nums)
+void buildHeap(vector<int>&nums,int len)
 {
-    for(int i = (nums.size()-2)/2;i>=0; i--)
-    heapfy(nums,nums.size(),i);
+    for(int i = (len-2)/2;i>=0; i--)
+    heapfy(nums,len,i);
 }
 
-void heapSort(vector<int> &nums)
+void heapSort(vector<int> &nums)                     //堆排序
 {
-    buildHeap(nums);
+    buildHeap(nums,nums.size());
     for(int i = nums.size()-1; i>0; i--)
     {
         swap(nums[0],nums[i]);
+         cout<<"before heapfy:";
+         show(nums);
         heapfy(nums,i,0);
+         cout<<"after heapfy:";
+         show(nums);
     }
+}
+
+vector<int> minNumOfK(vector<int> &nums,int k )  //最小k个数采用堆来实现
+{
+    if(k<1)
+    return vector<int>{};
+    buildHeap(nums,k);                 //首先构建一个长度为k的大顶堆，然后让后面的数和堆顶比较，如果比堆顶大，说明不符合条件，如果比堆顶小，那么将堆顶元素删除，将这个小的数，放在堆顶，然后heapfy一下，堆顶就变为下一个最大的数
+    for(int i = k; i<nums.size(); i++)
+    {
+        if(nums[i]<nums[0])
+        {
+            nums[0] = nums[i];
+            heapfy(nums,k,0);
+        }
+    }
+    return vector<int>(nums.begin(),nums.begin()+k);
 }
 
     
 int main(int argc, char **argv)
 {
-    vector<int> array{9,6,3,8,7,4,1};
+    vector<int> array{0,0,0,2,0,5};
     vector<int> MerGearray1{4,2,5,1,9,8,5,2,7,1,4,9,3,6,0};
+     vector<int> arr{9,6,5,2,1,4,7,8};
     // quickSort(MerGearray1,0,MerGearray1.size()-1);
     // show(MerGearray1);
     // show(MerGearray1);
-    // show(getLeastNumbers1(array,4));
-    heapSort(MerGearray1);
-    show(MerGearray1);
+    // show(getLeastNumbers(array,0));
+    show(minNumOfK(MerGearray1,4));
+    // heapSort(arr);
+    // show(arr);
     return 0;
 }
 
