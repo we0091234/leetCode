@@ -13,18 +13,18 @@ void heapfy(vector<int>& nums,int len,int parent)  //将一个有孩子节点的
 {
      //首先找到当前点的左孩子节点
      int leftChild = 2*parent+1;
-     int tmp = nums[parent];
+    //  int tmp = nums[parent];
      while(leftChild < len)
      {
          if(leftChild+1<len && nums[leftChild]>nums[leftChild+1]) //小顶堆 判断哪个最小
          leftChild++;
-         if(tmp<nums[leftChild])
+         if(nums[parent]<nums[leftChild])
          return ;
-         nums[parent] = nums[leftChild];
+         swap(nums[parent] ,nums[leftChild]);
          parent =leftChild;
          leftChild=2*leftChild+1;
      }
-     nums[parent]=tmp;
+  
 
 }
 void buildHeap(vector<int> &nums,int len)
@@ -47,12 +47,24 @@ vector<int> findTopK(vector<int>&nums,int k)  //前k个数建立一个小顶堆�
     }
     return vector<int>(nums.begin(),nums.begin()+k);
 }
+void heapSort(vector<int> &nums)
+{
+    buildHeap(nums,nums.size());
+    show(nums);
+    for(int i = nums.size()-1; i>0; i--)
+    {
+        swap(nums[i],nums[0]);
+        heapfy(nums,i,0);
+    }
+}
 
 int main(int argc, char **argv)
 {
-    vector<int > array{9,8,3,2,5,1,0,12};
+    vector<int > array{9,9,9,9,5,1,0,12};
     show(array);
-    auto newArray = findTopK(array,5);
-    show(newArray);
+    // auto newArray = findTopK(array,5);
+    // show(newArray);
+    heapSort(array);
+    show(array);
     return 0;
 }
