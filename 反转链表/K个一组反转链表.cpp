@@ -82,6 +82,20 @@ ListNode *kGroupReverse(ListNode *head,int k)
     return  pHead->next;
 }
 
+ListNode *KgroupVerseRecursion(ListNode *head,int k) //递归用法
+{
+    auto cur = head;
+   for(int i = 0; i<k; i++)
+   {
+       if(!cur) return head;
+        cur = cur->next;
+   }
+
+   auto newHead = reverseNode(head,cur);
+  auto p = KgroupVerseRecursion(cur,k);
+  head->next = p;
+  return  newHead;
+}
 
 
 int main(int argc,char **argv)
@@ -89,6 +103,6 @@ int main(int argc,char **argv)
     vector<int>  array{1,2,3,4,5,6,7,9,10};
     auto head= initNode(array);
     showNode(head);
-    head=kGroupReverse(head,4);
+    head=KgroupVerseRecursion(head,4);
      showNode(head);
 }
