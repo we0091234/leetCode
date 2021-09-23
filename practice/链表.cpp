@@ -147,6 +147,30 @@ ListNode *reserveRng(ListNode *head,int left ,int right) //区间反转链表
     return pHead->next;
 }
 
+bool isHuiwen(ListNode *head)  //回文链表
+{
+    auto *pHead = new ListNode (-1);
+    pHead->next = head;
+    auto slow = pHead;
+    auto fast = pHead;
+    while(fast&&fast->next)
+    {
+        fast=fast->next->next;
+        slow=slow->next;
+    }
+    slow = slow->next;
+    auto right = reserveList(slow,NULL);
+    showNode(right);
+    auto left = head;
+    while(right)
+    {
+        if(right->val != left->val)
+        return false;
+        right = right->next;
+        left=left->next;
+    }
+    return true;
+}
 
 
 
@@ -154,11 +178,11 @@ ListNode *reserveRng(ListNode *head,int left ,int right) //区间反转链表
 
 int main(int argc,char **argv)
 {
-    vector<int>  array{1,2,3,4,5};
+    vector<int>  array{1,2,3,4,2,1};
     auto head= initNode(array);
-    showNode(head);
+    // showNode(head);
     // head=KgroupVerseRecursion(head,4);
-    head = kGroupReverse(head,4);
-    
-     showNode(head);
+    // head = kGroupReverse(head,4);
+    cout<<isHuiwen(head)<<endl;
+    //  showNode(head);
 }
