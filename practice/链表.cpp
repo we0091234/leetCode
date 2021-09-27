@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <iostream>
 #include <vector>
+#include <queue>
 using namespace std;
 
 struct ListNode {
@@ -160,7 +161,7 @@ bool isHuiwen(ListNode *head)  //回文链表
     }
     slow = slow->next;
     auto right = reserveList(slow,NULL);
-    showNode(right);
+    // showNode(right);
     auto left = head;
     while(right)
     {
@@ -172,17 +173,121 @@ bool isHuiwen(ListNode *head)  //回文链表
     return true;
 }
 
+ListNode *initFromArray(vector<int>nums)
+{
+    int len =nums.size();
+    ListNode *pHead = new ListNode(-1);
+    ListNode *pTail =pHead;
+    for(int i = 0; i<len; i++)
+    {
+         ListNode *pNew = new ListNode(nums[i]);
+         pTail->next= pNew;
+         pTail = pNew;
+    }
+    return pHead->next;
+}
 
 
+
+ListNode *mergeTwo(ListNode *head1,ListNode *head2)
+{
+    ListNode *pHead= new ListNode (-1);
+    ListNode *pTmp = pHead;
+    while(head1&&head2)
+    {
+        if(head1->val<head2->val)
+        {
+            pTmp->next =head1;
+            pTmp=head1;
+            head1=head1->next;
+        }
+        else
+        {
+            pTmp->next =head2;
+             pTmp=head2;
+            head2=head2->next;
+        }
+    }
+    if(head1)
+    pTmp->next =head1;
+    else
+    pTmp ->next =head2;
+    return pHead->next;
+}
+ListNode *mergeKList(vector<ListNode *> listArray) //采用递归的方法
+{
+    if(listArray.size()<=1) return listArray[0];
+    vector<ListNode *>left;
+    vector<ListNode *>right;
+    int mid = listArray.size()/2;
+    for(int i = 0; i<mid; i++)
+    left.push_back(listArray[i]);
+    for(int i = mid; i<listArray.size(); i++)
+    right.push_back(listArray[i]);
+
+    ListNode *newHead1= mergeKList(left);
+    ListNode *newHead2= mergeKList(right);
+    
+   return mergeTwo(newHead1,newHead2);
+}
+
+
+struct cmp
+{
+    bool operator()(ListNode *a,ListNode *b)
+    {
+        return a->val>b->val;
+    }
+
+};
+
+ListNode *mergeKlistQueue(vector<ListNode *>listArray)
+{
+    ListNode *pHead = new ListNode(-1);
+    ListNode *pTail = pHead;
+    priority_queue<ListNode* , vector<ListNode *>, cmp> myqueue;
+    for(int i = 0; i<listArray.size();i++)
+    {
+        myqueue.push(listArray[i]);
+    }
+    while(!myqueue.empty())
+    {
+        auto smallest = myqueue.top();
+        pTail->next =smallest;
+        pTail=smallest;
+        smallest=smallest->next;
+        myqueue.pop();
+        if(smallest)
+        myqueue.push(smallest);
+        
+ 
+        
+        // cout<<myqueue.top()->val<<endl;
+        // myqueue.pop();
+    }
+    return pHead->next;
+}
 
 
 int main(int argc,char **argv)
 {
-    vector<int>  array{1,2,3,4,2,1};
-    auto head= initNode(array);
-    // showNode(head);
-    // head=KgroupVerseRecursion(head,4);
-    // head = kGroupReverse(head,4);
-    cout<<isHuiwen(head)<<endl;
+    // vector<int>  array{1,1};
+    // auto head= initNode(array);
+    // // showNode(head);
+    // // head=KgroupVerseRecursion(head,4);
+    // // head = kGroupReverse(head,4);
+    // cout<<isHuiwen(head)<<endl;
     //  showNode(head);
+
+
+    vector<int> nums1{1,3,4};
+    vector<int>nums2{2,4,6,8};
+    vector<int>nums3{0};
+    ListNode *l1 = initFromArray(nums1);
+    ListNode *l2 = initFromArray(nums2);
+    ListNode *l3 = initFromArray(nums3);
+    // showNode(l3);
+    vector<ListNode *> lists{l1,l2,l3};
+    auto l4 = mergeKlistQueue(lists);
+    showNode(l4);
 }

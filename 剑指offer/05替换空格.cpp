@@ -15,12 +15,9 @@
       return tmp;
     }
 
-//   string replaceSpace(string s) {  //不开辟空间试试
-//       for(int i = 0; i < s.length(); i++)
-//       {
-
-//       }
-//     }
+  string replaceSpace(string s) {  //不开辟空间试试
+     
+    }
 
 
 int main(int argc,char **argv)

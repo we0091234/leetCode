@@ -2,6 +2,7 @@
 
 #include<iostream>
 #include <vector>
+#include <queue>
 using namespace std;
 void show(vector<int> &nums)
 {
@@ -57,6 +58,32 @@ void heapSort(vector<int> &nums)
         heapfy(nums,i,0);
     }
 }
+vector<int>  findTopKsmall(vector<int> &nums,int k)
+{
+    vector<int> result;
+    priority_queue<int,vector<int> ,less<int> > myqueue;
+    for(int i = 0; i<k; i++)
+    {
+        myqueue.push(nums[i]);
+    }
+    for(int i = k; i<nums.size(); i++)
+    {
+        int top = myqueue.top();
+        if(top >nums[i] )
+        {
+            myqueue.pop();
+            myqueue.push(nums[i]);
+        }
+    }
+    
+    while(!myqueue.empty())
+    {
+        result.push_back(myqueue.top());
+        myqueue.pop();
+    }
+    return result;
+    
+}
 
 int main(int argc, char **argv)
 {
@@ -64,7 +91,7 @@ int main(int argc, char **argv)
     show(array);
     // auto newArray = findTopK(array,5);
     // show(newArray);
-    heapSort(array);
-    show(array);
+     auto result = findTopKsmall(array,4);
+    show(result);
     return 0;
 }
