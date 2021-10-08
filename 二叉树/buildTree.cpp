@@ -1,5 +1,7 @@
 #include <iostream>
 #include <vector>
+#include <stack>
+#include <algorithm>
 using namespace std;
 void show(vector<int> &nums)
 {
@@ -33,9 +35,50 @@ void traverse(BinaryTree *root)  //遍历
     //  cout<<root->val<<" ";   //中序遍历
    traverse(root->right);
     //   cout<<root->val<<" ";   //后序遍历
+    // cout<<endl;
+}
+void iterativeTraversal(BinaryTree *root)  //先序迭代遍历
+{
+  stack<BinaryTree *> myStack;
+  if(root)
+  myStack.push(root);
+  while(!myStack.empty())
+  {
+    auto tmp =myStack.top();
+    cout<<tmp->val<<" ";
+    myStack.pop();
+    if(tmp->right)
+    myStack.push(tmp->right);
+    if(tmp->left)
+    myStack.push(tmp->left);
+
+  }
 }
 
-BinaryTree *reverseBinaryTree(BinaryTree *root)
+vector<int>    iterativeSubsequentTraversal(BinaryTree *root) //迭代后续遍历，在先序遍历上面改，中左右 -》 中右左 -》 左右中
+{
+     stack<BinaryTree *> myStack;
+     vector<int> result;
+  if(root)
+  myStack.push(root);
+  while(!myStack.empty())
+  {
+    auto tmp =myStack.top();
+    result.push_back(tmp->val);
+    myStack.pop();
+  
+    if(tmp->left)                //先左后右
+    myStack.push(tmp->left);
+    if(tmp->right)
+    myStack.push(tmp->right);
+  }
+  reverse(result.begin(),result.end());
+  show(result);
+  return result;
+}
+
+
+ BinaryTree *reverseBinaryTree(BinaryTree *root) //翻转二叉树
 {
     if(!root) return NULL;
     
@@ -55,13 +98,15 @@ BinaryTree *reverseBinaryTree(BinaryTree *root)
 int main(int argc, char **argv)
 {
     vector<int> array {1,2,3,'#','#',4,'#','#',5,6};
-    show(array);
+    // show(array);
     int index = 0;
     auto root = initTree(array,index);
-    traverse(root);
+    iterativeSubsequentTraversal(root);
+    cout<<endl;
 
-    auto newRoot = reverseBinaryTree(root);
-    traverse(newRoot);
+    // auto newRoot = reverseBinaryTree(root);
+    // iterativeTraversal(newRoot);
+    // cout<<endl;
     
     return 0;
 }
