@@ -82,18 +82,52 @@ ListNode *mergeListNode(ListNode*l1,ListNode* l2)
     }
     return l3->next;
 }
+
+  ListNode* rotateRight1(ListNode* head, int k) 
+  {
+     ListNode*pHead = new ListNode(-1);
+     ListNode *pTail = pHead;
+     pHead->next = head;
+     ListNode *pre = head;
+     int len = 0;
+     while(pre)
+     {
+         pre=pre->next;
+         len++;
+         pTail =pTail->next;
+     }
+     k = k%len;
+     pre=head;
+     for(int i = 0; i<k; i++)
+     pre=pre->next;
+     ListNode *pre1 = head;
+     ListNode *pre2 = pHead;
+     while(pre)
+     {
+         pre=pre->next;
+         pre2=pre2->next;
+     }
+     pre1=pre2->next;
+     
+     pre2->next =NULL;
+     pTail->next =head;
+    //  while(pre1)
+    return pre1;
+}
+
 int main(int argc, char** argv)
 {
-    vector<int > array1={1,2,3,4,5};
-    vector<int> array2={9,9,9,9};
+    vector<int > array1={1,2};
+//     vector<int> array2={9,9,9,9};
     ListNode *l1 =NULL;
-    ListNode *l2 =NULL;
+//     ListNode *l2 =NULL;
     initLinkList(l1,array1);
-     initLinkList(l2,array2);
-    show(l1);
-    cout<<getLength(l1)<<endl;
-    // l1=linkListReverse(l1);
-   auto l3=mergeListNode(l1,l2);
-     show(l3);
+//      initLinkList(l2,array2);
+//     show(l1);
+//     cout<<getLength(l1)<<endl;
+//     // l1=linkListReverse(l1);
+//    auto l3=mergeListNode(l1,l2);
+    auto l2 =rotateRight1(l1,2);
+     show(l2);
     return 0;
 }

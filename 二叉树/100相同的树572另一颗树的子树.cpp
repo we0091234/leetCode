@@ -3,6 +3,7 @@
 #include <queue>
 #include <algorithm>
 #include <queue>
+#include<stack>
 using namespace std;
 void show(vector<int> &nums)
 {
@@ -123,14 +124,51 @@ bool recursiveSymmetry(TreeNode* root)
     if(!root)  return true;
     return compare(root->left,root->right);
 }
+
+   bool isSameTree(TreeNode* p, TreeNode* q)  //相同的树
+    {  
+        if(!p&&q) return false;
+        else if(p&&!q) return false;
+        else if(!p&&!q) return true;
+        else if(p->val!=q->val) return false;
+        
+        bool cmp1 = isSameTree(p->left,q->left);
+        bool cmp2 = isSameTree(p->right,q->right);
+        return cmp1&&cmp2;
+    }
+
+
+    bool isSubtree(TreeNode* root, TreeNode* subRoot) { //子树判断
+
+        stack<TreeNode *>myStack;
+        if(root)
+        myStack.push(root);
+        while(!myStack.empty())
+        {
+            TreeNode *tmp = myStack.top();
+            myStack.pop();
+            if(isSameTree(tmp,subRoot))
+            return true;
+            if(tmp->right)
+            myStack.push(tmp->right);
+              if(tmp->left)
+            myStack.push(tmp->left);
+            
+        }
+        return false;
+    }
+
 int main(int argc, char **argv)
 {
     // vector<int> array {1,2,3,'#','#',4,'#','#',5,6};
     vector<int> array {1,2,3,'#','#',4,'#','#',2,4,'#','#',3};
+    vector<int> array1 {1,2,3,'#','#',4,'#','#',2,4,'#','#',1};
     // vector<int> array {1,2,1};
     show(array);
-    int index = 0;
-    auto root = initTree(array,index);
+    int index1 = 0;
+    int index2 = 0;
+    auto root = initTree(array,index1);
+       auto root1 = initTree(array1,index2);
     auto output=levelOrder(root);
     for(auto &s:output)
     {
@@ -139,7 +177,7 @@ int main(int argc, char **argv)
 
     // reverse(array.begin(),array.end());
     // show(array);
-    cout<<recursiveSymmetry(root)<<endl;
+    cout<<isSameTree(root,root1)<<endl;
 
     // cout<<isHuiwen(array)<<endl;
 
