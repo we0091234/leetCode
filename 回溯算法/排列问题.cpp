@@ -21,7 +21,7 @@ bool findKey(vector<int>&path ,int key)
 
 }
 
-void arrangement(int n, int k)  //排列
+void arrangement(int n, int k,vector<bool> &used)  //排列
 {
     if(path.size()==k)
     {
@@ -30,12 +30,14 @@ void arrangement(int n, int k)  //排列
     }
     for(int i = 1; i<=n; i++)
     {
-        if(!findKey(path,i))
-        {
+        if(used[i])
+        continue;
+        used[i]=true;
          path.push_back(i);
-         arrangement(n,k);
+         arrangement(n,k,used);
          path.pop_back();
-        }
+         used[i]=false;
+        
     }
 }
 
@@ -44,7 +46,8 @@ void arrangement(int n, int k)  //排列
 
 int main(int argc, char** argv)
 {
-    arrangement(4,3);
+    vector<bool> used(4,false);
+    arrangement(3,2,used);
     // 
     // vector<int> nums{1,2};
     // cout<<findKey(nums,3)<<endl;

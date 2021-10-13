@@ -4,49 +4,67 @@
 #include <map>
 
 using namespace std;
-vector<char> path;
-void letterCombinations(string digits, vector<pair<char,string>> myPair,int index)
-  {
+string path;
+map<char ,string> myMap;
+
+vector<string> myStrVec;
+
+void transition(string digits,int index,vector<string> &result)
+{
       if(path.size()==digits.size())
       {
-          for(auto &s:path)
-          cout<<s;
-          cout<<endl;
+        result.push_back(path);
           return;
       }
-      for(int i =0; i<myPair[index].second.size(); i++)
+      for(int i =0; i<myStrVec[index].size(); i++)
       {
-          path.push_back(myPair[index].second[i]);
-          letterCombinations(digits,myPair,index+1);
+          path.push_back(myStrVec[index][i]);
+          transition(digits,index+1,result);
           path.pop_back();
       }
-      
+}
+vector<string> letterCombinations(string digits)
+  {
+     
+    vector<string > result;
+     if (digits=="") return result;
+     string letter = "abcdefghijklmnopqrstuvwxyz";
+     int i = 0;
+      for(char chr='2';chr<='9';chr++)
+    {
+        
+        if(chr =='7' || chr =='9')
+        {
+              myMap[chr]=letter.substr(i,4);
+              i+=4;
+        }
+        else{
+        
+             myMap[chr]=letter.substr(i,3);
+        i+=3;
+        }
+    
+    }
+
+
+       for(int i = 0; i<digits.size(); i++)
+       {
+            myStrVec.push_back(myMap[digits[i]]);
+       }
+
+       transition(digits,0,result);
+       return result;
    
 }
 
 int main(int argc, char **argv)
 {
-    vector<pair<char,string>> myPair;
-    map<char ,string> myMap;
-    string letter = "abcdefghijklmnopqrstuvwxyz";
-    int i = 0;
-    pair<char,string> pairSon;
-    for(char chr='2';chr<='9';chr++)
-    {
-        // myMap[chr]=letter.substr(i,3);
-        if(chr =='7' || chr =='9')
-        {
-              pairSon = make_pair(chr,letter.substr(i,4));
-              i+=4;
-        }
-        else{
-         pairSon = make_pair(chr,letter.substr(i,3));
-        i+=3;
-        }
-        myPair.push_back(pairSon);
-    }
-//    letterCombinations("",myPair,0);
-    for(auto  &s:myPair)
-    cout<<s.first<<" "<<s.second<<endl;
+ 
+   
+
+   auto result =letterCombinations("45");
+   for(auto &s:result)
+   cout<<s<<endl;
+
     return 0;
 }
