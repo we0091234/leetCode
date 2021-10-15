@@ -112,8 +112,8 @@ string convert(vector<int> path)
 
 int main(int argc, char **argv)
 {
-    vector<int> array {1,2,3,'#','#',4,'#','#',5,6};
-    // vector<int> array {1};
+    // vector<int> array {1,2,3,'#','#',4,'#','#',5,6};
+    vector<int> array {1};
     // show(array);
     int index = 0;
     auto root = initTree(array,index);
