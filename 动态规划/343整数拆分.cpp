@@ -5,7 +5,7 @@
 
 using namespace std;
 
-  double integerBreak(int n)
+  double integerBreak(int n)  //普通做法
    {
       
       int numof3 = n/3;
@@ -22,8 +22,18 @@ using namespace std;
     return result;
     }
 
+      double integerBreak1(int n)  //动态规划
+   {
+        vector<int> result(n+1);
+
+        
+      
+      
+   
+    }
+
 int main(int argc, char **argv)
 {
-    cout<< integerBreak(7)<<endl;
+    cout<< integerBreak1(7)<<endl;
     return 0;
 }

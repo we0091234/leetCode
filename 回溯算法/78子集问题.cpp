@@ -37,5 +37,8 @@ int main(int argc, char** argv)
     vector<int> nums{1,2,3};
     vector<vector<int>>result;
      backTrace(nums,0,result);
+     for(auto &s:result){
+         show(s);
+     }
     return 0;
 }
