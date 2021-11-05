@@ -61,6 +61,6 @@ int main(int argc, char **argv)
     
     string myStr ="abcabdddabcabc";
     matchString(myStr,"abc");
-    
+    cout<<"haha"<<endl;
     return 0;
 }
