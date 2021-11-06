@@ -32,11 +32,12 @@ vector<int> getNext(string str)
     return  next;
 }
 
-void pipei(string oristr,string substr)
+vector<int> pipei(string oristr,string substr)
 {
     int len1 = oristr.length();
     int len2 = substr.length();
     auto next = getNext(substr);
+    vector<int> result;
     int tar = 0;
     int pos= 0;
     while(tar<len1)
@@ -53,18 +54,20 @@ void pipei(string oristr,string substr)
         }
         if(pos==len2)
         {
-            cout<<tar-pos<<endl;
+            // cout<<tar-pos<<endl;
+            result.push_back(tar-pos);
             pos= next[pos-1];
         }
         
     }
+    return result;
 }
 
 int main(int argc, char **argv)
 {
     string mystr="aabababaaaaaaaaaaaabaaaa";
-    string mystr2 = "aa";
-    pipei(mystr,mystr2);
+    string mystr2 = "aaba";
+    show(pipei(mystr,mystr2));
   
     return 0;
 }
