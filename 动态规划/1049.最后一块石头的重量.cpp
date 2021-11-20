@@ -44,5 +44,6 @@ int main()
 {
     std::vector<int> nums{1,5,100,3,4};
     std::cout<<lastStoneWeightII(nums)<<std::endl;
+    std::cout<<"hello World"<<std::endl;
     return 0;
 }
